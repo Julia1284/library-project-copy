@@ -13,9 +13,9 @@ import java.util.List;
 @Data
 @Builder
 @JsonInclude(JsonInclude.Include.NON_NULL)
-public class BookDto {
+public class GenreDto {
     private Long id;
     private String name;
-    private String genre;
-    private List<AuthorDto> authors;
+
+    private List <BookDto> books;
 }
