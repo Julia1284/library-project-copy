@@ -26,6 +26,6 @@ public class Author {
      @Column(nullable = false)
     private String surname;
 
-     @ManyToMany (mappedBy = "author")
+     @ManyToMany (mappedBy = "authors")
     private Set<Book> books;
 }
