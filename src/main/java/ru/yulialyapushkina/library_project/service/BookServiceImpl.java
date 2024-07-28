@@ -8,7 +8,9 @@ import lombok.AllArgsConstructor;
 import lombok.RequiredArgsConstructor;
 import org.springframework.data.jpa.domain.Specification;
 import org.springframework.stereotype.Service;
+import ru.yulialyapushkina.library_project.dto.BookCreateDto;
 import ru.yulialyapushkina.library_project.dto.BookDto;
+import ru.yulialyapushkina.library_project.dto.BookUpdateDto;
 import ru.yulialyapushkina.library_project.entities.Book;
 import ru.yulialyapushkina.library_project.repositories.BookRepository;
 
@@ -39,6 +41,34 @@ public class BookServiceImpl implements BookService{
         });
         Book book = bookRepository.findOne(specification).orElseThrow();
         return convertEntityToDto(book);
+    }
+
+    @Override
+    public BookDto createBook(BookCreateDto bookCreateDto) {
+        Book book = bookRepository.save(convertDtoToEntity(bookCreateDto));
+        return convertEntityToDto(book);
+    }
+
+    @Override
+    public BookDto updateBook(BookUpdateDto bookUpdateDto) {
+        Book book = bookRepository.findById(bookUpdateDto.getId()).orElseThrow();
+        book.setName(bookUpdateDto.getName());
+        book.setGenre(bookUpdateDto.getGenre());
+        Book savedBook =  bookRepository.save(book);
+        BookDto bookDto = convertEntityToDto(savedBook);
+        return bookDto;
+    }
+
+    @Override
+    public void deleteBook(Long id) {
+        bookRepository.deleteById(id);
+    }
+
+    private Book  convertDtoToEntity (BookCreateDto bookCreateDto){
+        return Book.builder()
+                .name(bookCreateDto.getName())
+                .genre(bookCreateDto.getGenre())
+                .build();
     }
 
     private BookDto convertEntityToDto (Book book){
