@@ -2,10 +2,7 @@ package ru.yulialyapushkina.library_project.entities;
 
 
 import jakarta.persistence.*;
-import lombok.AllArgsConstructor;
-import lombok.Builder;
-import lombok.Getter;
-import lombok.NoArgsConstructor;
+import lombok.*;
 
 import java.util.Set;
 
@@ -20,10 +17,12 @@ public class Author {
     @GeneratedValue(strategy = GenerationType.IDENTITY)
     private Long id;
 
-     @Column(nullable = false)
+    @Setter
+    @Column(nullable = false)
      private String name;
 
-     @Column(nullable = false)
+    @Setter
+    @Column(nullable = false)
     private String surname;
 
      @ManyToMany (mappedBy = "authors")
