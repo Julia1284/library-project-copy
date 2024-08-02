@@ -1,4 +1,4 @@
-package ru.yulialyapushkina.library_project.controllers;
+package ru.yulialyapushkina.library_project.controllers.rest;
 
 import lombok.RequiredArgsConstructor;
 import org.springframework.web.bind.annotation.GetMapping;
@@ -9,7 +9,7 @@ import ru.yulialyapushkina.library_project.service.GenreService;
 
 @RestController
 @RequiredArgsConstructor
-public class GenreController {
+public class GenreRestController {
     private final GenreService genreService;
 
     @GetMapping ("/genre/{id}")
