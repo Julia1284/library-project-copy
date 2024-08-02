@@ -4,6 +4,8 @@ import ru.yulialyapushkina.library_project.dto.AuthorCreateDto;
 import ru.yulialyapushkina.library_project.dto.AuthorDto;
 import ru.yulialyapushkina.library_project.dto.AuthorUpdateDto;
 
+import java.util.List;
+
 public interface AuthorService {
     AuthorDto getAuthorById (Long id);
     AuthorDto getAuthorBySurnameV1 (String surname);
@@ -14,4 +16,6 @@ public interface AuthorService {
     AuthorDto updateAuthor (AuthorUpdateDto authorUpdateDto);
 
     void deleteAuthor (Long id);
+
+    List<AuthorDto> getAllAuthors ();
 }
