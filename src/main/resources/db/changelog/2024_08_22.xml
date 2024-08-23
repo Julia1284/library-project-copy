@@ -1,0 +1,20 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<databaseChangeLog
+        xmlns="http://www.liquibase.org/xml/ns/dbchangelog"
+        xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
+        xsi:schemaLocation="http://www.liquibase.org/xml/ns/dbchangelog
+                      http://www.liquibase.org/xml/ns/dbchangelog/dbchangelog-3.6.xsd">
+
+    <changeSet id="update user_passwords" author="author name">
+        <sql>
+            Update  users
+            set user_password = '$2y$05$mSIaP7bmDh.chgP7Bq3hUuyAjeJgw2xjRClBdccBbXcp4mMsTle9G'
+            where user_password = '123456' ;
+
+            Update  users
+            set user_password ='$2y$05$y7w58CN70ab3bf0KebyvVOrYkVPQRSnHDxIhrHp29t3/GbLVIbSAC'
+            where user_password = 'ytrewq' ;
+
+        </sql>
+    </changeSet>
+</databaseChangeLog>

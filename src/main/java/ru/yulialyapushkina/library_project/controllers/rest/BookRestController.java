@@ -2,6 +2,7 @@ package ru.yulialyapushkina.library_project.controllers.rest;
 
 
 import lombok.RequiredArgsConstructor;
+import org.springframework.security.access.prepost.PreAuthorize;
 import org.springframework.ui.Model;
 import org.springframework.web.bind.annotation.*;
 import ru.yulialyapushkina.library_project.dto.BookCreateDto;
@@ -19,10 +20,11 @@ public class BookRestController {
       return bookService.getByNameV1(name);
     }
 
-    @GetMapping ("book/v2")
-    BookDto getBookByNameV2 (@RequestParam ("name") String name){
-        return bookService.getByNameV2(name);
-    }
+//    @GetMapping ("/book/v2")
+//    BookDto getBookByNameV2 (@RequestParam ("name") String name){
+//        return bookService.getByNameV2(name);
+//    }
+
     @GetMapping ("book/v3")
     BookDto getBookByNameV3 (@RequestParam ("name") String name){
         return  bookService.getByNameV3(name);

@@ -9,12 +9,12 @@ import org.springframework.security.config.Customizer;
 import org.springframework.security.config.annotation.authentication.configuration.AuthenticationConfiguration;
 import org.springframework.security.config.annotation.method.configuration.EnableMethodSecurity;
 import org.springframework.security.config.annotation.web.builders.HttpSecurity;
+import org.springframework.security.config.annotation.web.configurers.AbstractAuthenticationFilterConfigurer;
 import org.springframework.security.config.annotation.web.configurers.AbstractHttpConfigurer;
 import org.springframework.security.crypto.bcrypt.BCryptPasswordEncoder;
 import org.springframework.security.crypto.password.PasswordEncoder;
 import org.springframework.security.web.SecurityFilterChain;
 import ru.yulialyapushkina.library_project.entities.RoleType;
-import ru.yulialyapushkina.library_project.security.UserDetailsImpl;
 import ru.yulialyapushkina.library_project.security.UserDetailsServiceImpl;
 
 @Configuration
@@ -33,6 +33,7 @@ public class SecurityConfiguration {
     public DaoAuthenticationProvider authenticationProvider() throws Exception {
         DaoAuthenticationProvider authProvider = new DaoAuthenticationProvider();
         authProvider.setUserDetailsService(userDetailsService);
+
         authProvider.setPasswordEncoder(passwordEncoder());
         return authProvider;
     }
@@ -44,18 +45,21 @@ public class SecurityConfiguration {
 
     @Bean
     public PasswordEncoder passwordEncoder() {
-        return new BCryptPasswordEncoder();
+           return new BCryptPasswordEncoder();
     }
 
     @Bean
     public SecurityFilterChain securityFilterChain (HttpSecurity httpSecurity) throws Exception {
-       // httpSecurity.csrf(AbstractHttpConfigurer::disable);
+
+        httpSecurity.csrf(AbstractHttpConfigurer::disable);
         httpSecurity.authenticationProvider(authenticationProvider());
         httpSecurity.authorizeHttpRequests((autorisation)->autorisation
-                .requestMatchers("/book").hasAnyAuthority(RoleType.ROLE_USER.name())
-                .requestMatchers("/books").hasAnyAuthority(RoleType.ROLE_ADMIN.name())
-                .anyRequest().authenticated()).httpBasic(Customizer.withDefaults());
-return httpSecurity.build();
+                .requestMatchers("/book/v2/**").hasAnyAuthority(RoleType.USER.name(), RoleType.ADMIN.name())
+                .requestMatchers("/books").hasAnyAuthority(RoleType.ADMIN.name())
 
+                .anyRequest().authenticated())
+                .formLogin(AbstractAuthenticationFilterConfigurer::permitAll);
+        httpSecurity.exceptionHandling(Customizer.withDefaults());
+return httpSecurity.build();
     }
 }
